@@ -1,0 +1,7 @@
+{
+    "files.eol": "\n",
+    "[powershell]": {
+        "files.encoding": "utf8bom",
+        "files.autoGuessEncoding": true
+     },
+}
