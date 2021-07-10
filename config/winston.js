@@ -1,8 +1,6 @@
 import winston from 'winston';
 
-import dotenv from 'dotenv';
-
-dotenv.config();
+require('dotenv').config();
 
 const options = {
   console: {

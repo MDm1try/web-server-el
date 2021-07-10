@@ -1,21 +1,22 @@
 {
     "root": true,
+    "env": {
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
         "prettier"
     ],
-    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 12,
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint",
         "prettier"
     ],
     "rules": {
-        "prettier/prettier": 2 // Means error
+        "prettier/prettier": ["off", { "singleQuote": true }]
     }
 }

@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
 
-dotenv.config();
+const morgan = require('morgan');
+
+require('dotenv').config();
 
 import winston from './config/winston';
 import api from './controllers/api/v1';
@@ -21,7 +21,7 @@ app.use(
   morgan('combined', {
     skip: (req) => req.originalUrl === '/',
     stream: {
-      write: function (msg: string) {
+      write: function (msg) {
         winston.info(msg);
       },
     },
@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
   res.status(200).send();
 });
 
-app.use(function (err: Error, req: Request, res: Response) {
+app.use(function (err, req, res) {
   winston.error(
     `500 - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip} - Error: ${err.stack}`
   );
