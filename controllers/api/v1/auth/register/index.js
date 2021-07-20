@@ -1,9 +1,9 @@
-import express from 'express'
+import express from 'express';
 
 import create from './create';
 
 const router = express.Router();
 
-router.post('/create', create);
+router.post('/', create);
 
-export default  router;
+export default router;

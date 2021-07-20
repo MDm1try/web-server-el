@@ -1,33 +1,87 @@
+'use strict';
+const { USER_SEX, USER_ROLES } = require('../helpers/constants');
 
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("User", {
-        id: {
-            type: DataTypes.UUID,
-            primaryKey: true,
-            autoIncrement: true
+  const User = sequelize.define(
+    'User',
+    {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        set(value) {
+          value && this.setDataValue('firstName', value.trim());
         },
-        email: DataTypes.STRING,
-        password: DataTypes.STRING,
-        fisrtName: {
-            type: DataTypes.STRING,
-            set(value) {
-                value && this.setDefaultValue("firstName", value.trim())
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        set(value) {
+          value && this.setDataValue('lastName', value.trim());
+        },
+      },
+      bio: {
+        type: DataTypes.STRING,
+        set(value) {
+          value && this.setDataValue('bio', value.trim());
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        set(value) {
+          value && this.setDataValue('email', value.trim());
+        },
+      },
+      phone: {
+        type: DataTypes.INTEGER,
+      },
+      sex: {
+        type: DataTypes.STRING,
+        validate: {
+          validTypes(value) {
+            if (value || !USER_SEX.includes(value)) {
+              throw new Error('Invalid sex type ' + value);
             }
+          },
         },
-        lastName: {
-            type: DataTypes.STRING,
-            set(value) {
-                value && this.setDefaultValue("firstName", value.trim())
+      },
+      password: {
+        type: DataTypes.STRING,
+        set(value) {
+          value && this.setDataValue('password', value.trim());
+        },
+      },
+      role: {
+        type: DataTypes.STRING,
+        validate: {
+          validTypes(value) {
+            if (value || !USER_ROLES.includes(value)) {
+              throw new Error('Invalid role ' + value);
             }
+          },
         },
-        phone: DataTypes.INTEGER,
-        createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE,
-    })
-
-    // User.associate = function(models) {
-    //     User.hasMany(models.Member, { foreignKey: "userId" })
-    // }
-
-    return User
-}
+      },
+      blocked: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      defaultScope: {
+        attributes: ['id', 'email'],
+      },
+    }
+  );
+  User.associate = function (models) {
+    User.hasMany(models.Post, { foreignKey: 'userId' });
+  };
+  return User;
+};

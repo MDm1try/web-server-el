@@ -28,13 +28,14 @@ app.use(
   })
 );
 
-api.use('/api/v1', api);
+app.use('/api/v1', api);
 
 app.get('/', function (req, res) {
   res.status(200).send();
 });
 
-app.use(function (err, req, res) {
+// eslint-disable-next-line no-unused-vars
+app.use(function (err, req, res, next) {
   winston.error(
     `500 - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip} - Error: ${err.stack}`
   );
