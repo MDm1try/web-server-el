@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         set(value) {
-          value && this.setDataValue('email', value.trim());
+          value && this.setDataValue('email', value.trim().toLowerCase());
         },
       },
       phone: {

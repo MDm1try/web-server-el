@@ -1,7 +1,11 @@
 {
-    "files.eol": "\n",
-    "[powershell]": {
-        "files.encoding": "utf8bom",
-        "files.autoGuessEncoding": true
-     },
+  "files.eol": "\n",
+  "[powershell]": {
+    "files.encoding": "utf8bom",
+    "files.autoGuessEncoding": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "editor.formatOnSave": true
 }
