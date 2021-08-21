@@ -57,13 +57,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           validTypes(value) {
-            if (value || !USER_ROLES.includes(value)) {
+            if (!value || !USER_ROLES.includes(value)) {
               throw new Error('Invalid role ' + value);
             }
           },
         },
       },
       blocked: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      confirmed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },

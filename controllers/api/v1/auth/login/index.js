@@ -1,7 +1,9 @@
 import express from 'express';
 
+import create from './create';
+
 const router = express.Router();
 
-// router.use("")
+router.post('/', create);
 
 export default router;
