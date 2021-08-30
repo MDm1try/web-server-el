@@ -3,18 +3,18 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Posts', {
+    return queryInterface.createTable('posts', {
       id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        defaultValue: Sequelize.UUIDV4,
+        autoIncrement: true,
       },
-      userId: {
-        type: Sequelize.UUID,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'id',
         },
       },
@@ -36,7 +36,7 @@ module.exports = {
       type: {
         type: Sequelize.NUMERIC,
       },
-      areaHa: {
+      area_hectares: {
         allowNull: false,
         type: Sequelize.NUMERIC,
       },
@@ -45,21 +45,23 @@ module.exports = {
         type: Sequelize.ENUM,
         values: ['active', 'inactive', 'block', 'trash'],
       },
-      publishedAt: {
+      published_at: {
         type: Sequelize.DATE,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     });
   },
 
   down: async (queryInterface) => {
-    return queryInterface.dropTable('Posts');
+    return queryInterface.dropTable('posts');
   },
 };

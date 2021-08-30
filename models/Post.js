@@ -7,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
     'Post',
     {
       id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
+        allowNull: false,
         primaryKey: true,
         autoIncrement: true,
       },
-      userId: {
+      user_id: {
         type: DataTypes.UUID,
       },
       description: {
@@ -42,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       type: {
         type: DataTypes.NUMERIC,
       },
-      areaHa: {
+      area_hectares: {
         type: DataTypes.NUMERIC,
       },
       status: {
@@ -55,20 +56,22 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      publishedAt: {
+      published_at: {
         type: DataTypes.DATE,
       },
-      createdAt: {
+      created_at: {
         type: DataTypes.DATE,
       },
-      updatedAt: {
+      updated_at: {
         type: DataTypes.DATE,
       },
     },
     {
+      tableName: 'posts',
       defaultScope: {
         attributes: ['id', 'description'],
       },
+      underscored: true,
     }
   );
 

@@ -2,7 +2,9 @@ import bcrypt from 'bcrypt';
 
 import { inputLoginUser } from '../../../../../helpers/validation';
 import { generateAccessToken } from '../../../../../helpers/auth';
-import { User } from '../../../../../models';
+import { User, Account, Sequelize } from '../../../../../models';
+
+const Op = Sequelize.Op;
 
 export default async function (req, res) {
   try {
@@ -14,7 +16,12 @@ export default async function (req, res) {
     const { email, password } = req.body;
 
     const user = await User.findOne({
-      where: { email: email.trim().toLowerCase() },
+      where: { email, emailVerified: { [Op.ne]: null } },
+      attributes: ['password'],
+      include: {
+        model: Account,
+        where: { providerType: 'credentials' },
+      },
     });
 
     if (!user) {
@@ -31,10 +38,10 @@ export default async function (req, res) {
     }
 
     const payload = { id: user.id };
-    const jwtToken = generateAccessToken(payload, '24h');
+    const accessToken = generateAccessToken(payload, '24h');
 
     return res.status(200).send({
-      jwtToken,
+      accessToken,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,

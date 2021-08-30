@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { User } from '../models';
+// import { User } from '../models';
 
 export const generateAccessToken = (payload, expiresIn = '1h') => {
   return jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn });
@@ -21,10 +21,10 @@ async function auth(req, res, next) {
     return res.status(401).send({ error: 'Token is invalid' }); // if there isn't any token
   }
 
-  const user = await User.findByPk(data.id);
-  if (!user) return res.status(401).send({ error: 'Token is invalid' });
+  // const user = await User.findByPk(data.id);
+  // if (!user) return res.status(401).send({ error: 'Token is invalid' });
 
-  req.user = user;
+  // req.user = user;
   next(); // pass the execution off to whatever request the client intended
 }
 
