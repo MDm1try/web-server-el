@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { inputLoginUser } from '../../../../../helpers/validation';
-import { generateAccessToken } from '../../../../../helpers/auth';
+import { generateAccessToken } from '../../../../../helpers/token';
 import { User, Account, Sequelize } from '../../../../../models';
 
 const Op = Sequelize.Op;

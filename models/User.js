@@ -1,5 +1,5 @@
 'use strict';
-const { USER_SEX, USER_ROLES } = require('../helpers/constants');
+const { USER_SEX, USER_ROLES } = require('../constants');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(

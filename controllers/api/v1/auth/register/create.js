@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 
 import { inputRegisterUser } from '../../../../../helpers/validation';
 import { User, Account } from '../../../../../models';
-import { USER_ROLE_MAP } from '../../../../../helpers/constants';
-import { generateAccessToken } from '../../../../../helpers/auth';
+import { USER_ROLE_MAP } from '../../../../../constants';
+import { generateAccessToken } from '../../../../../helpers/token';
 import { sendInvitation } from '../../../../../mail/methods';
 
 export default async function (req, res) {

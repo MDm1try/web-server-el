@@ -1,5 +1,5 @@
 'use strict';
-const { POST_STATUSES, POST_CURRENCIES } = require('../helpers/constants');
+const { POST_STATUSES, POST_CURRENCIES } = require('../constants');
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {

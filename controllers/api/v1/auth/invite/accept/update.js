@@ -1,12 +1,12 @@
 import { User } from '../../../../../../models';
-import { verifyToken } from '../../../../../../helpers/auth';
+import { verifyOwnAccessToken } from '../../../../../../helpers/token';
 
 export default async function (req, res) {
   try {
     const { token } = req.body;
     if (!token) return res.status(400).json({ error: 'Token is not valid' });
 
-    const data = verifyToken(token);
+    const data = verifyOwnAccessToken(token);
 
     if (!(data && data.payload && data.payload.id)) {
       return res.status(400).json({ error: 'Token is not valid' });

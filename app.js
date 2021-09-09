@@ -8,7 +8,6 @@ require('dotenv').config();
 
 import winston from './config/winston';
 import api from './controllers/api/v1';
-import { verifyToken } from './helpers/auth';
 
 const app = express();
 
@@ -32,11 +31,6 @@ app.use(
 app.use('/api/v1', api);
 
 app.get('/', function (req, res) {
-  console.log(
-    verifyToken(
-      'eyJhbGciOiJIUzUxMiJ9.eyJuYW1lIjoiTURtMXRyeSIsImVtYWlsIjpudWxsLCJwaWN0dXJlIjoiaHR0cHM6Ly9hdmF0YXJzLmdpdGh1YnVzZXJjb250ZW50LmNvbS91LzI5NjU2MDg2P3Y9NCIsInN1YiI6IjEiLCJpYXQiOjE2Mjk2Njc4NTgsImV4cCI6MTYzMjI1OTg1OH0.5fLgDSygqc2oNhqAJ9awxBX748WoJ0-v_Q4mu-IyOqQXgXjuZWKvCa_GGIasRImWQy4zNrY87eJ1RPOtcjp-gg'
-    )
-  );
   res.status(200).send();
 });
 
