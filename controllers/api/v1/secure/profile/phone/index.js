@@ -1,9 +1,9 @@
 import express from 'express';
 
-import profile from './profile';
+import update from './update';
 
 const router = express.Router();
 
-router.use('/profile', profile);
+router.put('/', update);
 
 export default router;
