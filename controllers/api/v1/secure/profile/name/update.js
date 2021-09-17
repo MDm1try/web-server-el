@@ -9,11 +9,10 @@ export default async function (req, res) {
   try {
     const { firstName, lastName } = req.body;
 
-    let user = await User.findByPk(1);
+    let user = await User.findByPk(req.user.id);
 
     if (!user) {
       let error = { error: 'The user is not exists.' };
-      console.error(error);
       return res.status(400).json(error);
     }
     const preparedFirstName = firstName.trim();

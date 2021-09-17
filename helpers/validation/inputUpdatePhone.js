@@ -5,7 +5,7 @@ function inputUpdatePhone(data) {
 
   if (!data.phone) {
     error = 'Phone is required';
-  } else if (!isMobilePhone(data.phone, 'uk-UA')) {
+  } else if (!isMobilePhone(data.phone, 'uk-UA', { strictMode: true })) {
     error = 'Phone is invalid';
   }
 
