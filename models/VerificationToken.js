@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
-  const Account = sequelize.define(
-    'Account',
+  const VerificationToken = sequelize.define(
+    'VerificationToken',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,43 +19,42 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
-      compoundId: {
+      type: {
+        // todo
         allowNull: false,
         type: DataTypes.STRING,
       },
-      providerType: {
+      used: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      token: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      providerId: {
+      expires: {
         allowNull: false,
-        type: DataTypes.STRING,
-      },
-      providerAccountId: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      refresh_token: DataTypes.STRING,
-      access_token: DataTypes.STRING,
-      access_token_expires: DataTypes.DATE,
-      created_at: {
         type: DataTypes.DATE,
       },
-      updated_at: {
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
         type: DataTypes.DATE,
       },
     },
     {
-      tableName: 'accounts',
+      tableName: 'verification_tokens',
       defaultScope: {
-        attributes: ['id'],
+        attributes: ['id', 'userId', 'used', 'type', 'expires', 'token'],
       },
       underscored: true,
     }
   );
 
-  Account.associate = function (models) {
-    Account.belongsTo(models.User, { foreignKey: 'userId' });
+  VerificationToken.associate = function (models) {
+    VerificationToken.belongsTo(models.User, { foreignKey: 'userId' });
   };
-  return Account;
+
+  return VerificationToken;
 };
