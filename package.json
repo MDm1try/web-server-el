@@ -20,6 +20,7 @@
     "google-auth-library": "^7.9.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^2.6.5",
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.9",
     "pg": "^8.6.0",
