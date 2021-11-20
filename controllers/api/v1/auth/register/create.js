@@ -22,28 +22,25 @@ export default async function (req, res) {
     });
 
     if (!user) {
-      user = await User.create(
-        {
-          email,
-          password: cryptPassword,
-          role: USER_ROLE_MAP.SUBSCRIBER,
-          account: {
-            providerType: 'credentials',
-            compoundId: 'own',
-            providerId: 'own',
-            providerAccountId: 'own',
-          },
-        },
-        {
-          include: [Account],
-        }
-      );
+      user = await User.create({
+        email,
+        password: cryptPassword,
+        role: USER_ROLE_MAP.SUBSCRIBER,
+      });
+
+      await Account.create({
+        userId: user.id,
+        providerType: 'credentials',
+        compoundId: email,
+        providerId: 'own',
+        providerAccountId: 'own',
+      });
     } else {
       await user.update({ password: cryptPassword });
       await Account.create({
         userId: user.id,
         providerType: 'credentials',
-        compoundId: 'own',
+        compoundId: email,
         providerId: 'own',
         providerAccountId: 'own',
       });

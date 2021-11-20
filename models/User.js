@@ -90,9 +90,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   User.associate = function (models) {
-    User.hasMany(models.Session, { foreignKey: 'user_id' });
-    User.hasOne(models.Account, { foreignKey: 'user_id' });
-    User.hasMany(models.Post, { foreignKey: 'user_id' });
+    User.hasMany(models.Session, { foreignKey: 'userId' });
+    User.hasMany(models.Account, { foreignKey: 'userId' });
+    User.hasMany(models.Post, { foreignKey: 'userId' });
+    User.hasMany(models.VerificationToken, { foreignKey: 'userId' });
   };
   return User;
 };
