@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { inputRegisterUser } from '../../../../../helpers/validation';
-import { User, Account } from '../../../../../models';
+import { User, Account, sequelize } from '../../../../../models';
 import { USER_ROLE_MAP } from '../../../../../constants';
 import { generateAccessToken } from '../../../../../helpers/token';
 import { sendInvitation } from '../../../../../mail/methods';
@@ -21,30 +21,43 @@ export default async function (req, res) {
       where: { email },
     });
 
-    if (!user) {
-      user = await User.create({
-        email,
-        password: cryptPassword,
-        role: USER_ROLE_MAP.SUBSCRIBER,
-      });
+    const transaction = await sequelize.transaction();
 
-      await Account.create({
-        userId: user.id,
-        providerType: 'credentials',
-        compoundId: email,
-        providerId: 'own',
-        providerAccountId: 'own',
-      });
+    if (!user) {
+      user = await User.create(
+        {
+          email,
+          password: cryptPassword,
+          role: USER_ROLE_MAP.SUBSCRIBER,
+          Accounts: [
+            {
+              providerType: 'credentials',
+              compoundId: email,
+              providerId: 'own',
+              providerAccountId: 'own',
+            },
+          ],
+        },
+        {
+          include: [Account],
+          transaction,
+        }
+      );
     } else {
-      await user.update({ password: cryptPassword });
-      await Account.create({
-        userId: user.id,
-        providerType: 'credentials',
-        compoundId: email,
-        providerId: 'own',
-        providerAccountId: 'own',
-      });
+      await user.update({ password: cryptPassword }, { transaction });
+      await Account.create(
+        {
+          userId: user.id,
+          providerType: 'credentials',
+          compoundId: email,
+          providerId: 'own',
+          providerAccountId: 'own',
+        },
+        { transaction }
+      );
     }
+
+    await transaction.commit();
 
     const payload = { id: user.id };
     const token = generateAccessToken({ payload }, '7d');
