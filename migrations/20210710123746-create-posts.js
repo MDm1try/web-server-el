@@ -1,6 +1,12 @@
 'use strict';
 
-// eslint-disable-next-line no-undef
+const {
+  POST_STATUSES,
+  POST_CURRENCIES,
+  POST_TYPES,
+  POST_PURPOSES,
+} = require('../constants/post');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable('posts', {
@@ -18,32 +24,48 @@ module.exports = {
           key: 'id',
         },
       },
+      type: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        values: POST_TYPES,
+      },
+      status: {
+        allowNull: false,
+        type: Sequelize.ENUM,
+        values: POST_STATUSES,
+      },
+      purpose: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        values: POST_PURPOSES,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       description: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      address: {
+      cadNum: {
         type: Sequelize.STRING,
       },
-      price: {
+      cost: {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
       currency: {
         allowNull: false,
         type: Sequelize.ENUM,
-        values: ['USD', 'EUR', 'UAH'],
-      },
-      type: {
-        type: Sequelize.NUMERIC,
+        values: POST_CURRENCIES,
       },
       area_hectares: {
         allowNull: false,
         type: Sequelize.NUMERIC,
       },
-      status: {
+      shape: {
+        type: Sequelize.JSON, // [{lat: number, lng: number}]
         allowNull: false,
-        type: Sequelize.ENUM,
-        values: ['active', 'inactive', 'block', 'trash'],
       },
       published_at: {
         type: Sequelize.DATE,

@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
-  const VerificationRequest = sequelize.define(
-    'VerificationRequest',
+  const Media = sequelize.define(
+    'Media',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,16 +11,26 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      identifier: {
-        allowNull: false,
-        type: DataTypes.STRING,
+      post_id: {
+        type: DataTypes.UUID,
       },
-      token: {
-        allowNull: false,
+      name: {
         type: DataTypes.STRING,
-      },
-      expires: {
         allowNull: false,
+      },
+      url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      contentType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      md5Hash: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      published_at: {
         type: DataTypes.DATE,
       },
       created_at: {
@@ -31,16 +41,17 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: 'verification_requests',
+      tableName: 'media',
       defaultScope: {
-        attributes: ['id'],
+        attributes: ['id', 'url', 'contentType'],
       },
       underscored: true,
     }
   );
 
-  VerificationRequest.associate = function (models) {
-    VerificationRequest.belongsTo(models.User, { foreignKey: 'userId' });
+  Media.associate = function (models) {
+    Media.belongsTo(models.Post, { foreignKey: 'postId' });
   };
-  return VerificationRequest;
+
+  return Media;
 };
