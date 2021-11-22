@@ -1,5 +1,11 @@
 'use strict';
-const { POST_STATUSES, POST_CURRENCIES } = require('../constants');
+const {
+  POST_STATUSES,
+  POST_CURRENCIES,
+  POST_TYPES,
+  POST_PURPOSES,
+  POST_STATUS_MAP,
+} = require('../constants');
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
@@ -15,46 +21,59 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.UUID,
       },
+      type: {
+        type: DataTypes.ENUM(...POST_TYPES),
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.ENUM(...POST_STATUSES),
+        allowNull: false,
+        defaultValue: POST_STATUS_MAP.INACTIVE,
+      },
+      purpose: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          validTypes(value) {
+            if (value || !POST_PURPOSES.includes(value)) {
+              throw new Error('Invalid the post purpose' + value);
+            }
+          },
+        },
+      },
+      name: {
+        type: DataTypes.STRING,
+        set(value) {
+          value && this.setDataValue('name', value.trim());
+        },
+      },
       description: {
         type: DataTypes.STRING,
         set(value) {
           value && this.setDataValue('description', value.trim());
         },
       },
-      address: {
+      cadNum: {
         type: DataTypes.STRING,
         set(value) {
-          value && this.setDataValue('address', value.trim());
+          value && this.setDataValue('name', value.trim());
         },
       },
-      price: {
+      cost: {
         type: DataTypes.DOUBLE,
+        allowNull: false,
       },
       currency: {
-        type: DataTypes.STRING,
-        validate: {
-          validTypes(value) {
-            if (value || !POST_CURRENCIES.includes(value)) {
-              throw new Error('Invalid currency type' + value);
-            }
-          },
-        },
-      },
-      type: {
-        type: DataTypes.NUMERIC,
+        type: DataTypes.ENUM(...POST_CURRENCIES),
+        allowNull: false,
       },
       area_hectares: {
         type: DataTypes.NUMERIC,
+        allowNull: false,
       },
-      status: {
-        type: DataTypes.STRING,
-        validate: {
-          validTypes(value) {
-            if (value || !POST_STATUSES.includes(value)) {
-              throw new Error('Invalid the post status' + value);
-            }
-          },
-        },
+      shape: {
+        type: DataTypes.JSON, // [{lat: number, lng: number}]
+        allowNull: false,
       },
       published_at: {
         type: DataTypes.DATE,
@@ -69,14 +88,16 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: 'posts',
       defaultScope: {
-        attributes: ['id', 'description'],
+        attributes: ['id', 'name'],
       },
       underscored: true,
     }
   );
 
-  // User.associate = function(models) {
-  //     User.hasMany(models.Member, { foreignKey: "userId" })
-  // }
+  Post.associate = function (models) {
+    Post.belongsTo(models.User, { foreignKey: 'userId' });
+    Post.hasMany(models.Media, { foreignKey: 'postId' });
+  };
+
   return Post;
 };
