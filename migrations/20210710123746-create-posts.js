@@ -26,7 +26,7 @@ module.exports = {
       },
       type: {
         allowNull: false,
-        type: Sequelize.ENUM,
+        type: Sequelize.INTEGER,
         values: POST_TYPES,
       },
       status: {

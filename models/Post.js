@@ -22,8 +22,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
       },
       type: {
-        type: DataTypes.ENUM(...POST_TYPES),
+        type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          validTypes(value) {
+            if (value || !POST_TYPES.includes(value)) {
+              throw new Error('Invalid the post type' + value);
+            }
+          },
+        },
       },
       status: {
         type: DataTypes.ENUM(...POST_STATUSES),

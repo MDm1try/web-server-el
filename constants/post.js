@@ -7,8 +7,8 @@ const POST_STATUS_MAP = {
 const POST_STATUSES = Object.values(POST_STATUS_MAP);
 const POST_CURRENCIES = ['USD', 'EUR', 'UAH'];
 const POST_TYPE_MAP = {
-  LAND_RENT: 'rent',
-  LAND_SALE: 'sale',
+  LAND_RENT: 0,
+  LAND_SALE: 1,
 };
 const POST_TYPES = Object.values(POST_TYPE_MAP);
 const POST_PURPOSE_MAP = {
