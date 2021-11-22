@@ -40,14 +40,14 @@ module.exports = {
         values: POST_PURPOSES,
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
-      cadNum: {
+      cad_num: {
         type: Sequelize.STRING,
       },
       cost: {

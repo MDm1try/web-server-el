@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           validTypes(value) {
-            if (value || !POST_TYPES.includes(value)) {
-              throw new Error('Invalid the post type' + value);
+            if (!POST_TYPES.includes(value)) {
+              throw new Error('Invalid the post type: ' + value);
             }
           },
         },
@@ -42,20 +42,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           validTypes(value) {
-            if (value || !POST_PURPOSES.includes(value)) {
-              throw new Error('Invalid the post purpose' + value);
+            if (!POST_PURPOSES.includes(value)) {
+              throw new Error('Invalid the post purpose: ' + value);
             }
           },
         },
       },
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         set(value) {
           value && this.setDataValue('name', value.trim());
         },
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         set(value) {
           value && this.setDataValue('description', value.trim());
         },
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM(...POST_CURRENCIES),
         allowNull: false,
       },
-      area_hectares: {
+      areaHectares: {
         type: DataTypes.NUMERIC,
         allowNull: false,
       },
