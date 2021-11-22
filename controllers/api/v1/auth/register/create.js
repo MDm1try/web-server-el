@@ -11,6 +11,8 @@ export default async function (req, res) {
 
   if (!isValid) return res.status(400).json(errors);
 
+  const transaction = await sequelize.transaction();
+
   try {
     const { email, password } = req.body;
 
@@ -20,8 +22,6 @@ export default async function (req, res) {
     let user = await User.findOne({
       where: { email },
     });
-
-    const transaction = await sequelize.transaction();
 
     if (!user) {
       user = await User.create(
@@ -67,6 +67,9 @@ export default async function (req, res) {
     return res.status(200).send({ success: true });
   } catch (err) {
     console.error(err);
+
+    await transaction.rollback();
+
     return res.status(500).send();
   }
 }
