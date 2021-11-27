@@ -35,13 +35,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      refresh_token: DataTypes.STRING,
-      access_token: DataTypes.STRING,
-      access_token_expires: DataTypes.DATE,
-      created_at: {
+      refreshToken: DataTypes.STRING,
+      accessToken: DataTypes.STRING,
+      accessTokenExpires: DataTypes.DATE,
+      createdAt: {
         type: DataTypes.DATE,
       },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
       },
     },

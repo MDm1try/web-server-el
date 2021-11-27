@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -23,18 +23,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DATE,
       },
-      session_token: {
+      sessionToken: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      access_token: {
+      accessToken: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      created_at: {
+      createdAt: {
         type: DataTypes.DATE,
       },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
       },
     },

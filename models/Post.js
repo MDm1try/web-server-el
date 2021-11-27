@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.UUID,
       },
       type: {
@@ -82,13 +82,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSON, // [{lat: number, lng: number}]
         allowNull: false,
       },
-      published_at: {
+      createdAt: {
         type: DataTypes.DATE,
       },
-      created_at: {
-        type: DataTypes.DATE,
-      },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
       },
     },
@@ -103,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Post.associate = function (models) {
     Post.belongsTo(models.User, { foreignKey: 'userId' });
-    Post.hasMany(models.Media, { foreignKey: 'postId' });
+    Post.hasMany(models.Media, { foreignKey: 'postId', as: 'medias' });
   };
 
   return Post;

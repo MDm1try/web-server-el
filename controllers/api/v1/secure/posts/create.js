@@ -29,10 +29,10 @@ export default async function (req, res) {
         currency,
         description,
         shape,
-        Media: medias,
+        medias,
       },
       {
-        include: [Media],
+        include: [{ model: Media, as: 'medias' }],
         transaction,
       }
     );
@@ -43,7 +43,7 @@ export default async function (req, res) {
   } catch (err) {
     console.error(err);
 
-    await transaction.commit();
+    await transaction.rollback();
 
     return res.status(500).send();
   }

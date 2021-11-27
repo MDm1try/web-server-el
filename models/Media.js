@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      post_id: {
+      postId: {
         type: DataTypes.UUID,
       },
       name: {
@@ -28,22 +28,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       md5Hash: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      published_at: {
+      createdAt: {
         type: DataTypes.DATE,
       },
-      created_at: {
-        type: DataTypes.DATE,
-      },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
       },
     },
     {
       tableName: 'media',
       defaultScope: {
-        attributes: ['id', 'url', 'contentType'],
+        attributes: ['id', 'url', 'contentType', 'md5Hash'],
       },
       underscored: true,
     }

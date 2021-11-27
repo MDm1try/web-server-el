@@ -25,11 +25,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      contentType: {
+      content_type: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      md5Hash: {
+      md5_hash: {
         type: Sequelize.STRING,
       },
       created_at: {
