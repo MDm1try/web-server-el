@@ -1,4 +1,4 @@
-import { Post, Media, sequelize } from '../../../../../models';
+import { Posts, Medias, sequelize } from '../../../../../models';
 
 export default async function (req, res) {
   const transaction = await sequelize.transaction();
@@ -17,7 +17,7 @@ export default async function (req, res) {
       medias,
     } = req.body;
 
-    const post = await Post.create(
+    const post = await Posts.create(
       {
         userId: req.user.id,
         name,
@@ -32,7 +32,7 @@ export default async function (req, res) {
         medias,
       },
       {
-        include: [{ model: Media, as: 'medias' }],
+        include: [{ model: Medias, as: 'medias' }],
         transaction,
       }
     );

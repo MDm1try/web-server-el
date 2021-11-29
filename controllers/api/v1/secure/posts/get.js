@@ -1,11 +1,11 @@
-import { Media, Post } from '../../../../../models';
+import { Medias, Posts } from '../../../../../models';
 
 export default async function (req, res) {
   try {
     const { postId } = req.params;
 
-    const post = await Post.findByPk(postId, {
-      include: [{ model: Media, as: 'medias' }],
+    const post = await Posts.findByPk(postId, {
+      include: [{ model: Medias, as: 'medias' }],
       attributes: [
         'userId',
         'name',

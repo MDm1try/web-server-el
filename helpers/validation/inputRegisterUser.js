@@ -1,4 +1,4 @@
-import { User, Account } from '../../models';
+import { Users, Accounts } from '../../models';
 import { isEmail } from '../validators';
 
 export default async function (data) {
@@ -11,10 +11,10 @@ export default async function (data) {
   if (data.email && !isEmail(data.email)) {
     errors.error = 'Invalid email address';
   } else if (data.email) {
-    const user = await User.findOne({
+    const user = await Users.findOne({
       where: { email: data.email },
       include: {
-        model: Account,
+        model: Accounts,
         where: { providerType: 'credentials' },
       },
     });

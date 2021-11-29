@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { inputRegisterUser } from '../../../../../helpers/validation';
-import { User, Account, sequelize } from '../../../../../models';
+import { Users, Accounts, sequelize } from '../../../../../models';
 import { USER_ROLE_MAP } from '../../../../../constants';
 import { generateAccessToken } from '../../../../../helpers/token';
 import { sendInvitation } from '../../../../../mail/methods';
@@ -19,12 +19,12 @@ export default async function (req, res) {
     const salt = await bcrypt.genSalt(10);
     const cryptPassword = await bcrypt.hash(password, salt);
 
-    let user = await User.findOne({
+    let user = await Users.findOne({
       where: { email },
     });
 
     if (!user) {
-      user = await User.create(
+      user = await Users.create(
         {
           email,
           password: cryptPassword,
@@ -39,13 +39,13 @@ export default async function (req, res) {
           ],
         },
         {
-          include: [Account],
+          include: [Accounts],
           transaction,
         }
       );
     } else {
       await user.update({ password: cryptPassword }, { transaction });
-      await Account.create(
+      await Accounts.create(
         {
           userId: user.id,
           providerType: 'credentials',

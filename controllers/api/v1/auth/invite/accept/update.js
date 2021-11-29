@@ -1,4 +1,4 @@
-import { sequelize, User } from '../../../../../../models';
+import { sequelize, Users } from '../../../../../../models';
 import { verifyOwnAccessToken } from '../../../../../../helpers/token';
 
 export default async function (req, res) {
@@ -14,7 +14,7 @@ export default async function (req, res) {
       return res.status(400).json({ error: 'Token is not valid' });
     }
 
-    const user = await User.findByPk(data.payload.id, {
+    const user = await Users.findByPk(data.payload.id, {
       attributes: ['id', 'emailVerified'],
     });
 

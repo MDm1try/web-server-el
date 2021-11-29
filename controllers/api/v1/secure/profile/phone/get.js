@@ -1,8 +1,8 @@
-import { User } from '../../../../../../models';
+import { Users } from '../../../../../../models';
 
 export default async function (req, res) {
   try {
-    const user = await User.findByPk(req.user.id, { attributes: ['phone'] });
+    const user = await Users.findByPk(req.user.id, { attributes: ['phone'] });
     if (!user) {
       let error = { error: 'The user is not exists.' };
       return res.status(400).json(error);

@@ -2,9 +2,9 @@ import bcrypt from 'bcrypt';
 
 import {
   Sequelize,
-  User,
-  VerificationToken,
-  Account,
+  Users,
+  VerificationTokens,
+  Accounts,
   sequelize,
 } from '../../../../../../models';
 import { inputUpdatePassword } from '../../../../../../helpers/validation';
@@ -20,7 +20,7 @@ export default async function (req, res) {
   try {
     const { token, password } = req.body;
     if (!token) return res.status(400).json({ error: 'Token is not valid' });
-    const savedToken = await VerificationToken.findOne({
+    const savedToken = await VerificationTokens.findOne({
       where: {
         token,
         expires: {
@@ -35,18 +35,18 @@ export default async function (req, res) {
         error: 'The token has been used. Please reset your password again.',
       });
 
-    const user = await User.findByPk(savedToken.userId);
+    const user = await Users.findByPk(savedToken.userId);
 
     if (!user) {
       return res.status(400).json({ error: 'Token is not valid' });
     }
 
-    const account = await Account.findOne({
+    const account = await Accounts.findOne({
       where: { userId: savedToken.userId, providerType: 'credentials' },
     });
 
     if (!account) {
-      await Account.create(
+      await Accounts.create(
         {
           userId: user.id,
           providerType: 'credentials',

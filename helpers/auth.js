@@ -1,6 +1,6 @@
 import { verifyGoogleIdToken, verifyOwnAccessToken } from './token';
 import { PROVIDERS, PROVIDERS_MAP } from '../constants';
-import { User } from '../models';
+import { Users } from '../models';
 
 async function auth(req, res, next) {
   const provider = req.headers['provider'];
@@ -18,7 +18,7 @@ async function auth(req, res, next) {
       }
       const payload = await verifyGoogleIdToken(idToken);
 
-      const user = await User.findOne({ where: { email: payload.email } });
+      const user = await Users.findOne({ where: { email: payload.email } });
       if (!user) return res.status(401).send({ error: 'Token is invalid' });
 
       req.user = user;
@@ -33,7 +33,7 @@ async function auth(req, res, next) {
       }
       const payload = verifyOwnAccessToken(token);
 
-      const user = await User.findByPk(payload.id);
+      const user = await Users.findByPk(payload.id);
       if (!user) return res.status(401).send({ error: 'Token is invalid' });
 
       req.user = user;

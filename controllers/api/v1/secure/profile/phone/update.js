@@ -1,5 +1,5 @@
 import { inputUpdatePhone } from '../../../../../../helpers/validation';
-import { sequelize, User } from '../../../../../../models';
+import { sequelize, Users } from '../../../../../../models';
 
 export default async function (req, res) {
   const { isValid, error } = await inputUpdatePhone(req.body);
@@ -10,7 +10,7 @@ export default async function (req, res) {
   try {
     const { phone } = req.body;
 
-    const user = await User.findByPk(req.user.id);
+    const user = await Users.findByPk(req.user.id);
 
     if (!user) {
       let error = { error: 'The user is not exists.' };

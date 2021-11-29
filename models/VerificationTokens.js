@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
-  const VerificationRequest = sequelize.define(
-    'VerificationRequest',
+  const VerificationTokens = sequelize.define(
+    'VerificationTokens',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,9 +11,22 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      identifier: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
+      type: {
+        // todo
         allowNull: false,
         type: DataTypes.STRING,
+      },
+      used: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       token: {
         allowNull: false,
@@ -31,16 +44,17 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: 'verification_requests',
+      tableName: 'verification_tokens',
       defaultScope: {
-        attributes: ['id'],
+        attributes: ['id', 'userId', 'used', 'type', 'expires', 'token'],
       },
       underscored: true,
     }
   );
 
-  VerificationRequest.associate = function (models) {
-    VerificationRequest.belongsTo(models.User, { foreignKey: 'userId' });
+  VerificationTokens.associate = function (models) {
+    VerificationTokens.belongsTo(models.Users, { foreignKey: 'userId' });
   };
-  return VerificationRequest;
+
+  return VerificationTokens;
 };

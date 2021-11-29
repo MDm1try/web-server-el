@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
-  const Media = sequelize.define(
-    'Media',
+  const Sessions = sequelize.define(
+    'Sessions',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,22 +11,24 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      postId: {
-        type: DataTypes.UUID,
-      },
-      name: {
-        type: DataTypes.STRING,
+      userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
       },
-      url: {
-        type: DataTypes.STRING,
+      expires: {
         allowNull: false,
+        type: DataTypes.DATE,
       },
-      contentType: {
-        type: DataTypes.STRING,
+      sessionToken: {
         allowNull: false,
+        type: DataTypes.STRING,
       },
-      md5Hash: {
+      accessToken: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       createdAt: {
@@ -37,17 +39,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: 'media',
+      tableName: 'sessions',
       defaultScope: {
-        attributes: ['id', 'url', 'contentType', 'md5Hash'],
+        attributes: ['id'],
       },
       underscored: true,
     }
   );
 
-  Media.associate = function (models) {
-    Media.belongsTo(models.Post, { foreignKey: 'postId' });
-  };
-
-  return Media;
+  // User.associate = function(models) {
+  //     User.hasMany(models.Member, { foreignKey: "userId" })
+  // }
+  return Sessions;
 };

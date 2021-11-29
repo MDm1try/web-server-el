@@ -9,8 +9,8 @@ const {
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
-  const Post = sequelize.define(
-    'Post',
+  const Posts = sequelize.define(
+    'Posts',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -98,10 +98,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Post.associate = function (models) {
-    Post.belongsTo(models.User, { foreignKey: 'userId' });
-    Post.hasMany(models.Media, { foreignKey: 'postId', as: 'medias' });
+  Posts.associate = function (models) {
+    Posts.belongsTo(models.Users, { foreignKey: 'userId' });
+    Posts.hasMany(models.Medias, { foreignKey: 'postId', as: 'medias' });
   };
 
-  return Post;
+  return Posts;
 };

@@ -1,4 +1,4 @@
-import { User } from '../../../../../models';
+import { Users } from '../../../../../models';
 import { isCadastralNumber } from '../../../../../helpers/validators';
 import { getParcelInfo } from '../../../../../lib/parcel';
 
@@ -8,7 +8,7 @@ export default async function (req, res) {
       return res.status(400).json({ error: 'A cadastral number is not valid' });
     }
 
-    let user = await User.findByPk(req.user.id, {
+    let user = await Users.findByPk(req.user.id, {
       attributes: ['firstName', 'lastName'],
     });
 

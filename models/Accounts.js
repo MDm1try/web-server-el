@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line no-undef
 module.exports = (sequelize, DataTypes) => {
-  const Account = sequelize.define(
-    'Account',
+  const Accounts = sequelize.define(
+    'Accounts',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -54,8 +54,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Account.associate = function (models) {
-    Account.belongsTo(models.User, { foreignKey: 'userId' });
+  Accounts.associate = function (models) {
+    Accounts.belongsTo(models.Users, { foreignKey: 'userId' });
   };
-  return Account;
+  return Accounts;
 };

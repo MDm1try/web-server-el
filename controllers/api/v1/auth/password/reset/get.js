@@ -1,4 +1,4 @@
-import { Sequelize, User, VerificationToken } from '../../../../../../models';
+import { Sequelize, Users, VerificationTokens } from '../../../../../../models';
 
 const Op = Sequelize.Op;
 
@@ -6,7 +6,7 @@ export default async function (req, res) {
   try {
     const { token } = req.params;
     if (!token) return res.status(400).json({ error: 'Token is not valid' });
-    const savedToken = await VerificationToken.findOne({
+    const savedToken = await VerificationTokens.findOne({
       where: {
         token,
         expires: {
@@ -21,7 +21,7 @@ export default async function (req, res) {
         error: 'The token has been used. Please reset your password again.',
       });
 
-    const user = await User.findByPk(savedToken.userId);
+    const user = await Users.findByPk(savedToken.userId);
 
     if (!user) {
       return res.status(400).json({ error: 'Token is not valid' });

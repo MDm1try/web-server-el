@@ -2,8 +2,8 @@
 const { USER_SEX, USER_ROLES } = require('../constants');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'User',
+  const Users = sequelize.define(
+    'Users',
     {
       // for next-auth https://next-auth.js.org/adapters/typeorm/postgres
       id: {
@@ -89,11 +89,11 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-  User.associate = function (models) {
-    User.hasMany(models.Session, { foreignKey: 'userId' });
-    User.hasMany(models.Account, { foreignKey: 'userId' });
-    User.hasMany(models.Post, { foreignKey: 'userId' });
-    User.hasMany(models.VerificationToken, { foreignKey: 'userId' });
+  Users.associate = function (models) {
+    Users.hasMany(models.Sessions, { foreignKey: 'userId' });
+    Users.hasMany(models.Accounts, { foreignKey: 'userId' });
+    Users.hasMany(models.Posts, { foreignKey: 'userId' });
+    Users.hasMany(models.VerificationTokens, { foreignKey: 'userId' });
   };
-  return User;
+  return Users;
 };

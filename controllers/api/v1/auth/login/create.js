@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 import { inputLoginUser } from '../../../../../helpers/validation';
 import { generateAccessToken } from '../../../../../helpers/token';
-import { User, Account, Sequelize } from '../../../../../models';
+import { Users, Accounts, Sequelize } from '../../../../../models';
 
 const Op = Sequelize.Op;
 
@@ -15,11 +15,11 @@ export default async function (req, res) {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({
+    const user = await Users.findOne({
       where: { email, emailVerified: { [Op.ne]: null } },
       attributes: ['password'],
       include: {
-        model: Account,
+        model: Accounts,
         where: { providerType: 'credentials' },
       },
     });

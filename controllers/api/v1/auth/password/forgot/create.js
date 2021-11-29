@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { VerificationToken, User } from '../../../../../../models';
+import { VerificationTokens, Users } from '../../../../../../models';
 import sendResetPasswordUrl from '../../../../../../mail/methods/sendResetPasswordUrl';
 import { isEmail } from '../../../../../../helpers/validators';
 
@@ -12,13 +12,13 @@ export default async function (req, res) {
       return res.status(400).json({ error: 'Invalid email address' });
     }
 
-    const user = await User.findOne({ where: { email } });
+    const user = await Users.findOne({ where: { email } });
 
     if (user) {
       const token = crypto.randomBytes(64).toString('hex');
       let expiresDate = new Date();
       expiresDate.setHours(expiresDate.getHours() + 1);
-      await VerificationToken.create({
+      await VerificationTokens.create({
         token,
         userId: user.id,
         type: 'email',

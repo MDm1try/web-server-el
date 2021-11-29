@@ -1,8 +1,8 @@
-import { User } from '../../../../../../models';
+import { Users } from '../../../../../../models';
 
 export default async function (req, res) {
   try {
-    let user = await User.findByPk(req.user.id, {
+    let user = await Users.findByPk(req.user.id, {
       attributes: ['firstName', 'lastName'],
     });
 
