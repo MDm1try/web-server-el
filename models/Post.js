@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       cadNum: {
         type: DataTypes.STRING,
         set(value) {
-          value && this.setDataValue('name', value.trim());
+          value && this.setDataValue('cadNum', value.trim());
         },
       },
       cost: {
