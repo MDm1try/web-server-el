@@ -1,11 +1,10 @@
-import { Media, Post } from '../../../../../models';
+import { Media, Post } from '../../../../../../models';
 
 export default async function (req, res) {
   try {
-    const userId = req.user.id;
+    const { postId } = req.params;
 
-    const posts = await Post.findAll({
-      where: { userId },
+    const post = await Post.findByPk(postId, {
       include: [{ model: Media, as: 'medias' }],
       attributes: [
         'userId',
@@ -21,7 +20,11 @@ export default async function (req, res) {
       ],
     });
 
-    return res.status(200).send(posts || []);
+    if (!post) {
+      const error = { error: 'The post is not exists.' };
+      return res.status(400).json(error);
+    }
+    return res.status(200).send(post);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: err.message });
