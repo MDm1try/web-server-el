@@ -4,7 +4,8 @@ import {
   Sequelize,
   User,
   VerificationToken,
-  Account, sequelize,
+  Account,
+  sequelize,
 } from '../../../../../../models';
 import { inputUpdatePassword } from '../../../../../../helpers/validation';
 
@@ -15,7 +16,6 @@ export default async function (req, res) {
   const transaction = await sequelize.transaction();
 
   if (!isValid) return res.status(400).json(errors);
-
 
   try {
     const { token, password } = req.body;
@@ -46,13 +46,16 @@ export default async function (req, res) {
     });
 
     if (!account) {
-      await Account.create({
-        userId: user.id,
-        providerType: 'credentials',
-        compoundId: user.email,
-        providerId: 'own',
-        providerAccountId: 'own',
-      }, { transaction });
+      await Account.create(
+        {
+          userId: user.id,
+          providerType: 'credentials',
+          compoundId: user.email,
+          providerId: 'own',
+          providerAccountId: 'own',
+        },
+        { transaction }
+      );
     }
 
     const salt = await bcrypt.genSalt(10);

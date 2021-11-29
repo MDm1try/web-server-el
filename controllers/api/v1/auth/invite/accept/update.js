@@ -1,4 +1,4 @@
-import {sequelize, User} from '../../../../../../models';
+import { sequelize, User } from '../../../../../../models';
 import { verifyOwnAccessToken } from '../../../../../../helpers/token';
 
 export default async function (req, res) {
@@ -34,7 +34,7 @@ export default async function (req, res) {
     return res.status(200).send({ success: true });
   } catch (err) {
     console.error(err);
-    
+
     await transaction.rollback();
 
     return res.status(500).send({ error: 'Token is not valid' });

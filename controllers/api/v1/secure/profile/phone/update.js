@@ -1,5 +1,5 @@
 import { inputUpdatePhone } from '../../../../../../helpers/validation';
-import {sequelize, User} from '../../../../../../models';
+import { sequelize, User } from '../../../../../../models';
 
 export default async function (req, res) {
   const { isValid, error } = await inputUpdatePhone(req.body);

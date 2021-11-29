@@ -1,5 +1,5 @@
 import { inputUpdateName } from '../../../../../../helpers/validation';
-import {sequelize, User} from '../../../../../../models';
+import { sequelize, User } from '../../../../../../models';
 
 export default async function (req, res) {
   const { isValid, error } = await inputUpdateName(req.body);
@@ -20,11 +20,14 @@ export default async function (req, res) {
     const preparedLastName = lastName.trim();
     const name = preparedFirstName + ' ' + preparedLastName;
 
-    await user.update({
-      firstName: preparedFirstName,
-      lastName: preparedLastName,
-      name,
-    }, { transaction });
+    await user.update(
+      {
+        firstName: preparedFirstName,
+        lastName: preparedLastName,
+        name,
+      },
+      { transaction }
+    );
 
     await transaction.commit();
 
