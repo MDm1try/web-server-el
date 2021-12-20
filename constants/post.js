@@ -23,6 +23,21 @@ const POST_PURPOSE_MAP = {
 };
 const POST_PURPOSES = Object.values(POST_PURPOSE_MAP);
 
+const POST_SORTING = {
+  cost: {
+    asc: ['cost', 'ASC'],
+    desc: ['cost', 'DESC'],
+  },
+  name: {
+    asc: ['name', 'ASC'],
+    desc: ['name', 'DESC'],
+  },
+  areaHectares: {
+    asc: ['areaHectares', 'ASC'],
+    desc: ['areaHectares', 'DESC'],
+  },
+};
+
 module.exports = {
   POST_STATUS_MAP,
   POST_STATUSES,
@@ -31,4 +46,5 @@ module.exports = {
   POST_TYPES,
   POST_PURPOSE_MAP,
   POST_PURPOSES,
+  POST_SORTING,
 };
