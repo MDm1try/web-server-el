@@ -67,6 +67,12 @@ module.exports = {
   down: (queryInterface) => {
     return queryInterface
       .dropTable('users')
-      .then(() => queryInterface.removeIndex('users', ['email']));
+      .then(() => queryInterface.removeIndex('users', ['email']))
+      .then(
+        queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_users_role";')
+      )
+      .then(
+        queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_users_sex";')
+      );
   },
 };

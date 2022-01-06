@@ -5,6 +5,7 @@ const {
   POST_CURRENCIES,
   POST_TYPES,
   POST_PURPOSES,
+  COST_PER_VALUES,
 } = require('../constants/post');
 
 module.exports = {
@@ -54,6 +55,10 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
+      cost_per: {
+        type: Sequelize.ENUM,
+        values: COST_PER_VALUES,
+      },
       currency: {
         allowNull: false,
         type: Sequelize.ENUM,
@@ -84,6 +89,22 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    return queryInterface.dropTable('posts');
+    return queryInterface
+      .dropTable('posts')
+      .then(
+        queryInterface.sequelize.query(
+          'DROP TYPE IF EXISTS "enum_posts_cost_per";'
+        )
+      )
+      .then(
+        queryInterface.sequelize.query(
+          'DROP TYPE IF EXISTS "enum_posts_currency";'
+        )
+      )
+      .then(
+        queryInterface.sequelize.query(
+          'DROP TYPE IF EXISTS "enum_posts_status";'
+        )
+      );
   },
 };

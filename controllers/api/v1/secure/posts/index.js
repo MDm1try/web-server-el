@@ -4,7 +4,7 @@ import create from './create';
 import get from './get';
 import byId from './byId';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.post('/', create);
 router.use('/:postId', byId);

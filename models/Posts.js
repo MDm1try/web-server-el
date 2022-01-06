@@ -5,6 +5,7 @@ const {
   POST_TYPES,
   POST_PURPOSES,
   POST_STATUS_MAP,
+  COST_PER_VALUES,
 } = require('../constants');
 
 // eslint-disable-next-line no-undef
@@ -70,6 +71,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
+      costPer: {
+        type: DataTypes.ENUM(...COST_PER_VALUES),
+      },
       currency: {
         type: DataTypes.ENUM(...POST_CURRENCIES),
         allowNull: false,
@@ -81,6 +85,9 @@ module.exports = (sequelize, DataTypes) => {
       shape: {
         type: DataTypes.JSON, // [{lat: number, lng: number}]
         allowNull: false,
+      },
+      publishedAt: {
+        type: DataTypes.DATE,
       },
       createdAt: {
         type: DataTypes.DATE,

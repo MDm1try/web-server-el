@@ -6,6 +6,13 @@ const POST_STATUS_MAP = {
 };
 const POST_STATUSES = Object.values(POST_STATUS_MAP);
 const POST_CURRENCIES = ['USD', 'EUR', 'UAH'];
+
+const COST_PER_MAP = {
+  PER_YEAR: `per-year`,
+  PER_MONTH: `per-month`,
+};
+const COST_PER_VALUES = Object.values(COST_PER_MAP);
+
 const POST_TYPE_MAP = {
   LAND_RENT: 0,
   LAND_SALE: 1,
@@ -47,4 +54,6 @@ module.exports = {
   POST_PURPOSE_MAP,
   POST_PURPOSES,
   POST_SORTING,
+  COST_PER_VALUES,
+  COST_PER_MAP,
 };
