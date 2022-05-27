@@ -19,3 +19,28 @@ export const verifyGoogleIdToken = async (idToken) => {
   const payload = ticket.getPayload();
   return payload;
 };
+
+// async function getCities(regionId) {
+//   const ukResult = await fetch(
+//     `https://www.olx.ua/api/v1/geo-encoder/regions/${regionId}/cities/`,
+//     { headers: { 'accept-language': 'uk' } }
+//   );
+//   const ukJSON = await ukResult.json();
+
+//   const ruResult = await fetch(
+//     `https://www.olx.ua/api/v1/geo-encoder/regions/${regionId}/cities/`
+//   );
+//   const ruJSON = await ruResult.json();
+
+//   return ukJSON.data.map(({ name, normalized_name, ...city }) => {
+//     const ruRecord = ruJSON.data.find(({ id }) => id === city.id);
+//     return {
+//       id: city.id,
+//       ...city,
+//       regionId,
+//       normalizedName: normalized_name,
+//       ukName: name,
+//       ruName: ruRecord.name,
+//     };
+//   });
+// }
